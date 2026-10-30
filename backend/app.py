@@ -1,8 +1,10 @@
 import io
 from fastapi import FastAPI, File, Form, HTTPException, UploadFile
 from PIL import Image
+from service import MockService
 
 app = FastAPI()
+service = MockService()
 
 @app.get("/health")
 def health():
@@ -16,5 +18,4 @@ def predict(image: UploadFile = File(...), text: str = Form("")):
         img.load() 
     except Exception:
         raise HTTPException(400, "Could not read the image (use PNG or JPEG)")
-    return {"width": img.width, "height": img.height, "mode": img.mode,
-            "bytes": len(data), "text_chars": len(text)}
+    return service.predict(data, text[:2000])
