@@ -1,2 +1,3 @@
 tok
 *.pyc
+/frontend/node_modules
