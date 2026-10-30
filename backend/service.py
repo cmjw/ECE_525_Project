@@ -1,9 +1,10 @@
 import hashlib
 import numpy as np
 
-def norm(a): 
+def norm(a):
     a = np.asarray(a, dtype=float)
-    return ((a - a.min()) / (a.max() - a.min() + 1e-8)).tolist()
+    span = a.max() - a.min()
+    return (np.ones_like(a) if span < 1e-8 else (a - a.min()) / span).tolist()
 
 class MockService:
     mock = True
