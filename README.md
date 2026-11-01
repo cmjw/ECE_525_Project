@@ -1,15 +1,22 @@
 # ECE 525 Project
 
-- Pretrained model: BiomedCLIP
-    - https://huggingface.co/microsoft/BiomedCLIP-PubMedBERT_256-vit_base_patch16_224
-    - Fusion head
+This project uses Microsoft's pretrained [BiomedCLIP architecture](https://huggingface.co/microsoft/BiomedCLIP-PubMedBERT_256-vit_base_patch16_224) [1], a multimodal medical transformer model, with a custom fusion head for cross attention between vision transformer and text transformer model.
 
-- FastAPI + React
+The backend was developed using Python, and the frontend was developed using FastAPI and React. The app has been tested on Windows only, not on MacOS or Linux.
 
+## Dependencies and Installation
+
+### Dependencies
+
+- Node.js version 18+
+
+### How to Run
 
 Run backend:
 ```
 cd backend 
+python -m venv .venv
+.venv\Scripts\python -m pip install -r requirements.txt
 .venv\Scripts\python -m uvicorn app:app --port 8000
 ```
 
@@ -19,8 +26,8 @@ cd frontend
 npm install && npm run dev
 ```
 
-Web app hosted at http://localhost:5173
+The web app is hosted at http://localhost:5173
 
 ## References
 
-- https://arxiv.org/abs/2303.00915
+- [1] Zhang, S., Xu, Y., Usuyama, N., Xu, H., Bagga, J., Tinn, R., Preston, S., Rao, R., Wei, M., Valluri, N., Wong, C., Tupini, A., Wang, Y., Mazzola, M., Shukla, S., Liden, L., Gao, J., Crabtree, A., Piening, B., … Poon, H. (2025). BiomedCLIP: A multimodal biomedical foundation model pretrained from fifteen million scientific image-text pairs (arXiv:2303.00915). arXiv. https://doi.org/10.48550/arXiv.2303.00915
