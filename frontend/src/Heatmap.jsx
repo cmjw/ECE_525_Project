@@ -1,23 +1,25 @@
 import { useEffect, useRef, useState } from 'react'
 
-const SIZE = 448 // canvas pixels
-const N = 14 // attention grid
+const SIZE = 560 // canvas pixels; 560 / 14 = 40 px per attention cell
+const N = 14 // attention grid is N x N
 const CELL = SIZE / N
 
 const clip = (x) => Math.max(0, Math.min(1, x))
+
+// Colours for attention heatmap
+const STOPS = [[0, 0, 4], [87, 16, 110], [188, 55, 84], [249, 142, 9], [252, 255, 164]]
 const jet = (v) => [
   255 * clip(1.5 - Math.abs(4 * v - 3)),
   255 * clip(1.5 - Math.abs(4 * v - 2)),
   255 * clip(1.5 - Math.abs(4 * v - 1)),
 ]
 
-export default function Heatmap({ imageUrl, values, mask, onMaskChange, tool }) {
+export default function Heatmap({ imageUrl, values, mask, onMaskChange, tool, opacity }) {
   const canvas = useRef(null)
   const painting = useRef(false)
   const maskRef = useRef(mask)
-  maskRef.current = mask   // latest mask, so fast drags don't lose cells
+  maskRef.current = mask 
   const [img, setImg] = useState(null)
-  const [opacity, setOpacity] = useState(0.5)
 
   useEffect(() => {
     const i = new Image()
@@ -29,7 +31,7 @@ export default function Heatmap({ imageUrl, values, mask, onMaskChange, tool }) 
     if (!img) return
     const ctx = canvas.current.getContext('2d')
 
-    // Backend pads the X-ray to a square before the model sees it, so draw it the same way.
+    // The backend pads the X-ray to a square before the model sees it, so draw it the same way.
     ctx.fillStyle = '#000'
     ctx.fillRect(0, 0, SIZE, SIZE)
     const s = Math.min(SIZE / img.width, SIZE / img.height)
@@ -52,20 +54,35 @@ export default function Heatmap({ imageUrl, values, mask, onMaskChange, tool }) 
       ctx.globalAlpha = 1
     }
 
+    // Draw cell grid while a mask tool is active
+    if (tool !== 'off') {
+      ctx.strokeStyle = 'rgba(255,255,255,0.18)'
+      ctx.lineWidth = 1
+      ctx.beginPath()
+      for (let i = 1; i < N; i++) {
+        ctx.moveTo(i * CELL, 0)
+        ctx.lineTo(i * CELL, SIZE)
+        ctx.moveTo(0, i * CELL)
+        ctx.lineTo(SIZE, i * CELL)
+      }
+      ctx.stroke()
+    }
+
     // Masked cells: darkened with a diagonal line, drawn on top of everything
     mask.forEach((m, k) => {
       if (!m) return
       const x = (k % N) * CELL
       const y = Math.floor(k / N) * CELL
-      ctx.fillStyle = 'rgba(0,0,0,0.6)'
+      ctx.fillStyle = 'rgba(13,16,19,0.62)'
       ctx.fillRect(x, y, CELL, CELL)
-      ctx.strokeStyle = 'rgba(255,255,255,0.5)'
+      ctx.strokeStyle = 'rgba(231,236,239,0.6)'
+      ctx.lineWidth = 1.5
       ctx.beginPath()
-      ctx.moveTo(x, y + CELL)
-      ctx.lineTo(x + CELL, y)
+      ctx.moveTo(x + 4, y + CELL - 4)
+      ctx.lineTo(x + CELL - 4, y + 4)
       ctx.stroke()
     })
-  }, [img, values, opacity, mask])
+  }, [img, values, opacity, mask, tool])
 
   const paint = (e) => {
     const r = canvas.current.getBoundingClientRect()
@@ -82,26 +99,29 @@ export default function Heatmap({ imageUrl, values, mask, onMaskChange, tool }) 
   }
 
   return (
-    <div>
-      <canvas
-        ref={canvas}
-        width={SIZE}
-        height={SIZE}
-        style={{ width: '100%', maxWidth: SIZE, background: '#000', cursor: tool === 'off' ? 'default' : 'crosshair', touchAction: 'none' }}
-        onPointerDown={(e) => {
-          if (tool === 'off') return
-          e.currentTarget.setPointerCapture(e.pointerId)
-          painting.current = true
-          paint(e)
-        }}
-        onPointerMove={(e) => { if (painting.current) paint(e) }}
-        onPointerUp={() => { painting.current = false }}
-        onPointerCancel={() => { painting.current = false }}
-      />
-      <label style={{ display: 'block' }}>
-        Overlay opacity{' '}
-        <input type="range" min="0" max="1" step="0.05" value={opacity} onChange={(e) => setOpacity(+e.target.value)} />
-      </label>
-    </div>
+    <canvas
+      ref={canvas}
+      className="canvas"
+      width={SIZE}
+      height={SIZE}
+      role="img"
+      aria-label="Medical image with attention overlay"
+      style={{ cursor: tool === 'off' ? 'default' : 'crosshair', touchAction: tool === 'off' ? 'auto' : 'none' }}
+      onPointerDown={(e) => {
+        if (tool === 'off') return
+        e.currentTarget.setPointerCapture(e.pointerId)
+        painting.current = true
+        paint(e)
+      }}
+      onPointerMove={(e) => {
+        if (painting.current) paint(e)
+      }}
+      onPointerUp={() => {
+        painting.current = false
+      }}
+      onPointerCancel={() => {
+        painting.current = false
+      }}
+    />
   )
 }
