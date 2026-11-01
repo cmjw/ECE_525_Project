@@ -26,6 +26,8 @@ export default function App() {
   const [status, setStatus] = useState('')
   const [testPattern, setTestPattern] = useState(false)
   const [showEmptyPage, setShowEmptyPage] = useState(false)
+  const [mask, setMask] = useState(Array(196).fill(false))   // true = this 14x14 cell is masked
+  const [tool, setTool] = useState('off')   // 'off' | 'draw' | 'erase'
 
   const onFile = (f) => {
     if (!f) return
@@ -42,21 +44,23 @@ export default function App() {
       const body = new FormData()
       body.append('image', file)
       body.append('text', text)
+      body.append('patch_mask', mask.map((m) => (m ? '1' : '0')).join(''))
       try {
         const res = await fetch('/api/predict', { method: 'POST', body, signal: ctrl.signal })
         if (!res.ok) throw new Error((await res.json().catch(() => ({}))).detail || res.statusText)
-        setResult(await res.json())
-        setSelected(null)
+        const data = await res.json()
+        setResult(data)
+        setSelected((s) => (s !== null && s < data.tokens.length ? s : null))
         setStatus('')
       } catch (e) {
         if (e.name !== 'AbortError') setStatus('error: ' + e.message)
       }
-    }, 500)
+    }, 300)
     return () => {
       clearTimeout(timer)
       ctrl.abort()
     }
-  }, [file, text])
+  }, [file, text, mask])
 
   const map = result && (selected === null ? result.image_attention : result.token_attention[selected])
   const values = testPattern ? TEST_GRID : map
@@ -98,14 +102,22 @@ export default function App() {
 
           <input type="file" accept="image/png,image/jpeg" onChange={(e) => onFile(e.target.files[0])} />
           <br />
-          <textarea rows={3} cols={60} value={text} onChange={(e) => setText(e.target.value)} placeholder="Clinical indication" />
+          <textarea rows={3} cols={60} value={text} onChange={(e) => { setText(e.target.value); setSelected(null) }} placeholder="Clinical indication" />
           <label style={{ display: 'block' }}>
             <input type="checkbox" checked={testPattern} onChange={(e) => setTestPattern(e.target.checked)} /> Show alignment test pattern
           </label>
+          <div style={{ margin: '8px 0' }}>
+            Mask tool:{' '}
+            {['off', 'draw', 'erase'].map((t) => (
+              <button key={t} onClick={() => setTool(t)} style={{ marginRight: 4, fontWeight: tool === t ? 700 : 400 }}>{t}</button>
+            ))}
+            <button onClick={() => setMask(Array(196).fill(false))}>clear mask</button>
+            <span style={{ marginLeft: 8 }}>{mask.filter(Boolean).length} of 196 cells masked</span>
+          </div>
 
           <div style={{ display: 'flex', gap: 32, flexWrap: 'wrap', alignItems: 'flex-start' }}>
             <div style={{ flex: '1 1 320px', maxWidth: 448 }}>
-              {imageUrl && <Heatmap imageUrl={imageUrl} values={values} />}
+              {imageUrl && <Heatmap imageUrl={imageUrl} values={values} mask={mask} onMaskChange={setMask} tool={tool} />}
               <p>{caption}</p>
             </div>
             <div style={{ flex: '1 1 320px' }}>
