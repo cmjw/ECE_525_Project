@@ -4,6 +4,7 @@ import threading
 from fastapi import FastAPI, File, Form, HTTPException, UploadFile
 from PIL import Image
 
+# can set a MOCK environment variable to test with mock model.
 if os.getenv("MOCK", "").strip().strip('"') == "1":
     from mock_service import MockService
     service = MockService()
@@ -12,7 +13,7 @@ else:
     service = RealService("fusion.pt")
 
 app = FastAPI()
-lock = threading.Lock()          # one model call at a time (shared image-feature cache)
+lock = threading.Lock() 
 
 @app.get("/health")
 def health():
