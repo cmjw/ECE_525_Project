@@ -24,7 +24,7 @@ class FusionClassifier(nn.Module):
         self.layers = nn.ModuleList(FusionLayer(d, heads) for _ in range(layers))
         self.head = nn.Sequential(nn.LayerNorm(d), nn.Linear(d, n_labels))
 
-    def forward(self, img, txt, txt_pad, drop_img=None, drop_txt=None, return_attn=False):
+    def forward(self, img, txt, txt_pad, drop_img=None, drop_txt=None, return_attn=False, extra_pad=None):
         B, ni = img.size(0), img.size(1)
         x = torch.cat([self.cls.expand(B, -1, -1),
                        self.img_proj(img.float()) + self.mod.weight[0],
@@ -32,6 +32,7 @@ class FusionClassifier(nn.Module):
         pad = torch.cat([torch.zeros(B, 1 + ni, dtype=torch.bool, device=img.device), txt_pad], 1)
         if drop_img is not None: pad[:, 1:1 + ni] |= drop_img[:, None]     # hide a whole modality per sample
         if drop_txt is not None: pad[:, 1 + ni:] |= drop_txt[:, None]
+        if extra_pad is not None: pad = pad | extra_pad   # (B, 1 + ni + nt) True = hide this key
         attns = []
         for layer in self.layers:
             x, w = layer(x, pad)

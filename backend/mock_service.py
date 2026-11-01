@@ -16,7 +16,7 @@ class MockService:
         yy, xx = np.mgrid[0:14, 0:14]
         return norm(np.exp(-((yy - cy) ** 2 + (xx - cx) ** 2) / (2 * 2.5 ** 2)).ravel())
 
-    def predict(self, data, text):
+    def predict(self, data, text, patch_mask=None, word_mask=None):
         # "predict" with random data
         rng = np.random.default_rng(int(hashlib.sha1(data + text.encode()).hexdigest()[:8], 16))
         words = text.split()[:24] or ["no", "indication", "provided"]
