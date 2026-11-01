@@ -19,12 +19,20 @@ def health():
     return {"ok": True, "mock": service.mock}
 
 @app.post("/predict")
-def predict(image: UploadFile = File(...), text: str = Form("")):
+def predict(image: UploadFile = File(...), text: str = Form(""),
+            patch_mask: str = Form(""), word_mask: str = Form("")):
     data = image.file.read()
     try:
         img = Image.open(io.BytesIO(data))
         img.load()
     except Exception:
         raise HTTPException(400, "Could not read the image (use PNG or JPEG)")
+    try:  # patch_mask: 196 chars of 0/1; word_mask: "2,5"
+        if patch_mask and (len(patch_mask) != 196 or set(patch_mask) - {"0", "1"}):
+            raise ValueError
+        patches = [k for k, c in enumerate(patch_mask) if c == "1"]
+        words = [int(x) for x in word_mask.split(",") if x.strip()]
+    except ValueError:
+        raise HTTPException(400, "Bad mask")
     with lock:
-        return service.predict(data, text[:2000])
+        return service.predict(data, text[:2000], patches, words)
