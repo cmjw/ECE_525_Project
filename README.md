@@ -10,7 +10,7 @@
 Run backend:
 ```
 cd backend 
-.venv\Scripts\python -m uvicorn app:app --reload --port 8000
+.venv\Scripts\python -m uvicorn app:app --port 8000
 ```
 
 Run frontend:
