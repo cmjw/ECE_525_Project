@@ -4,12 +4,12 @@ import threading
 from fastapi import FastAPI, File, Form, HTTPException, UploadFile
 from PIL import Image
 
-if os.getenv("USE_REAL") == "1":
-    from service import RealService
-    service = RealService("fusion.pt")
-else:
+if os.getenv("MOCK", "").strip().strip('"') == "1":
     from mock_service import MockService
     service = MockService()
+else:
+    from service import RealService
+    service = RealService("fusion.pt")
 
 app = FastAPI()
 lock = threading.Lock()          # one model call at a time (shared image-feature cache)
