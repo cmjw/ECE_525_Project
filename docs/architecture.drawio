@@ -1,0 +1,51 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.3.0 Chrome/140.0.7339.249 Electron/38.7.2 Safari/537.36" version="29.3.0">
+  <diagram name="Page-1" id="LsyCKVjvtZHo-DzCRWyY">
+    <mxGraphModel dx="1042" dy="634" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="1700" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="mm0f_G6orl_xgBQ_xF59-1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="UI Inputs" vertex="1">
+          <mxGeometry height="60" width="120" x="140" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="mm0f_G6orl_xgBQ_xF59-2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="PyTorch Execution Hooks" vertex="1">
+          <mxGeometry height="60" width="120" x="380" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="mm0f_G6orl_xgBQ_xF59-3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Visual Rendering Engine" vertex="1">
+          <mxGeometry height="60" width="120" x="540" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="mm0f_G6orl_xgBQ_xF59-5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Model Classification Output" vertex="1">
+          <mxGeometry height="60" width="120" x="710" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="mm0f_G6orl_xgBQ_xF59-6" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Attention Heatmap Visualization" vertex="1">
+          <mxGeometry height="60" width="120" x="880" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="mm0f_G6orl_xgBQ_xF59-7" edge="1" parent="1" source="mm0f_G6orl_xgBQ_xF59-1" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="mm0f_G6orl_xgBQ_xF59-2" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="610" y="340" as="sourcePoint" />
+            <mxPoint x="660" y="290" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mm0f_G6orl_xgBQ_xF59-8" connectable="0" parent="mm0f_G6orl_xgBQ_xF59-7" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="update model inputs" vertex="1">
+          <mxGeometry relative="1" x="-0.2356" y="2" as="geometry">
+            <mxPoint x="14" y="12" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mm0f_G6orl_xgBQ_xF59-9" edge="1" parent="1" source="mm0f_G6orl_xgBQ_xF59-1" style="endArrow=classic;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;" target="mm0f_G6orl_xgBQ_xF59-6" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <Array as="points">
+              <mxPoint x="200" y="120" />
+              <mxPoint x="940" y="120" />
+            </Array>
+            <mxPoint x="610" y="340" as="sourcePoint" />
+            <mxPoint x="660" y="290" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mm0f_G6orl_xgBQ_xF59-10" connectable="0" parent="mm0f_G6orl_xgBQ_xF59-9" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="select token to view cross attention" vertex="1">
+          <mxGeometry relative="1" x="-0.0385" y="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
