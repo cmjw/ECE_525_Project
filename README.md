@@ -8,6 +8,7 @@ The backend was developed using Python, and the frontend was developed using Fas
 
 ### Dependencies
 
+- Python version 3.12 (3.13 does not support PyTorch)
 - Node.js version 18+
 
 ### How to Run
