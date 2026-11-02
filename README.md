@@ -1,4 +1,6 @@
-# ECE 525 Project
+# ECE 425/525 Project: Multimodal Medical Attention Visualizer
+
+Tatiana Rastoskueva, Kaycee Ridenhour, Charlotte White
 
 This project uses Microsoft's pretrained [BiomedCLIP architecture](https://huggingface.co/microsoft/BiomedCLIP-PubMedBERT_256-vit_base_patch16_224) [1], a multimodal medical transformer model, with a custom fusion head for cross attention between vision transformer and text transformer model.
 
