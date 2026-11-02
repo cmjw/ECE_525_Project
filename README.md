@@ -2,17 +2,20 @@
 
 This project uses Microsoft's pretrained [BiomedCLIP architecture](https://huggingface.co/microsoft/BiomedCLIP-PubMedBERT_256-vit_base_patch16_224) [1], a multimodal medical transformer model, with a custom fusion head for cross attention between vision transformer and text transformer model.
 
-The backend was developed using Python, and the frontend was developed using FastAPI and React. The app has been tested on Windows only, not on MacOS or Linux.
+The backend was developed using Python, and the frontend was developed using FastAPI and React. The app has been tested on Windows x64 only, not on MacOS or Linux.
 
 ## Dependencies and Installation
 
 ### Dependencies
 
+- Python 3.12+
 - Node.js version 18+
 
 ### How to Run
 
-Run backend:
+1. Clone repository
+
+2. Run backend:
 ```
 cd backend 
 python -m venv .venv
@@ -20,13 +23,13 @@ python -m venv .venv
 .venv\Scripts\python -m uvicorn app:app --port 8000
 ```
 
-Run frontend:
+3. Run frontend:
 ```
 cd frontend
 npm install && npm run dev
 ```
 
-The web app is hosted at http://localhost:5173
+4. Interact with the web app, hosted at http://localhost:5173.
 
 ## References
 

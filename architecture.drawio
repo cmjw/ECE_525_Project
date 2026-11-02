@@ -1,0 +1,133 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.3.0 Chrome/140.0.7339.249 Electron/38.7.2 Safari/537.36" version="29.3.0">
+  <diagram name="Page-1" id="LsyCKVjvtZHo-DzCRWyY">
+    <mxGraphModel dx="1042" dy="634" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="1700" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="mm0f_G6orl_xgBQ_xF59-12" parent="1" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;" value="" vertex="1">
+          <mxGeometry height="200" width="830" x="190" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="mm0f_G6orl_xgBQ_xF59-13" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;autosize=1;resizable=0;" value="Offline, run once" vertex="1">
+          <mxGeometry height="30" width="110" x="550" y="330" as="geometry" />
+        </mxCell>
+        <mxCell id="mm0f_G6orl_xgBQ_xF59-14" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;b&gt;Open-i Dataset&lt;/b&gt;&lt;div&gt;3,689 chest X-rays&lt;/div&gt;&lt;div&gt;Indication text + labels&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="160" x="220" y="380" as="geometry" />
+        </mxCell>
+        <mxCell id="mm0f_G6orl_xgBQ_xF59-15" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;b&gt;Feature Cache&lt;/b&gt;&lt;br&gt;&lt;div&gt;BiomedCLIP ran once&lt;/div&gt;&lt;div&gt;For training only, ~1.4 GB&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="160" x="420" y="380" as="geometry" />
+        </mxCell>
+        <mxCell id="mm0f_G6orl_xgBQ_xF59-16" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;b&gt;Train Fusion Head&lt;/b&gt;&lt;br&gt;&lt;div&gt;Learns the 8 findings&lt;/div&gt;&lt;div&gt;Test AUC ~0.74&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="160" x="620" y="380" as="geometry" />
+        </mxCell>
+        <mxCell id="mm0f_G6orl_xgBQ_xF59-17" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;b&gt;Fusion Weights&lt;/b&gt;&lt;br&gt;&lt;div&gt;Load at startup of app&lt;/div&gt;&lt;div&gt;~8 MB&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="160" x="820" y="380" as="geometry" />
+        </mxCell>
+        <mxCell id="mm0f_G6orl_xgBQ_xF59-18" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;b&gt;UI Inputs&lt;/b&gt;&lt;br&gt;&lt;div&gt;React + Vite&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;Upload X-ray image&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;Type clinical indication&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;Draw mask on 14x14 grid&lt;/div&gt;" vertex="1">
+          <mxGeometry height="170" width="160" x="90" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="mm0f_G6orl_xgBQ_xF59-19" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;b&gt;Execution Layer&lt;/b&gt;&lt;br&gt;&lt;div&gt;FastAPI&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;POST /predict&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;Validate image, text and mask&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;Send to prediction service&lt;/div&gt;" vertex="1">
+          <mxGeometry height="170" width="170" x="320" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="mm0f_G6orl_xgBQ_xF59-20" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;div&gt;&lt;b&gt;Feature Extraction&lt;/b&gt;&lt;/div&gt;&lt;div&gt;Frozen BiomedCLIP&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;Pad image to square (224x224)&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;ViT-B/16 image model&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;PubmedBERT text model&lt;/div&gt;" vertex="1">
+          <mxGeometry height="170" width="180" x="560" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="mm0f_G6orl_xgBQ_xF59-21" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;div&gt;&lt;b&gt;Fusion Head&lt;/b&gt;&lt;/div&gt;&lt;div&gt;Trained with ~2M parameters&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;[CLS] + 197 image + 64 text&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;2 layers, d=256, h=4&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;Masked cells, key padding&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;Head-averaged attention&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="170" width="180" x="810" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="mm0f_G6orl_xgBQ_xF59-22" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;div&gt;&lt;b&gt;Visual Rendering&lt;/b&gt;&lt;/div&gt;&lt;div&gt;React canvas + DOM&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;text-align: left; background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Attention heatmap over X-ray&amp;nbsp;&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Raw scores displayed&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Word chips by attention&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Display map per word&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="170" width="190" x="1070" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="mm0f_G6orl_xgBQ_xF59-23" edge="1" parent="1" source="mm0f_G6orl_xgBQ_xF59-18" style="endArrow=classic;html=1;rounded=0;" target="mm0f_G6orl_xgBQ_xF59-19" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="630" y="340" as="sourcePoint" />
+            <mxPoint x="680" y="290" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mm0f_G6orl_xgBQ_xF59-29" connectable="0" parent="mm0f_G6orl_xgBQ_xF59-23" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="POST" vertex="1">
+          <mxGeometry relative="1" x="-0.2" as="geometry">
+            <mxPoint y="15" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mm0f_G6orl_xgBQ_xF59-24" edge="1" parent="1" source="mm0f_G6orl_xgBQ_xF59-19" style="endArrow=classic;html=1;rounded=0;" target="mm0f_G6orl_xgBQ_xF59-20" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="630" y="340" as="sourcePoint" />
+            <mxPoint x="680" y="290" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mm0f_G6orl_xgBQ_xF59-30" connectable="0" parent="mm0f_G6orl_xgBQ_xF59-24" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Image, text,&amp;nbsp;&lt;div&gt;mask&lt;/div&gt;" vertex="1">
+          <mxGeometry relative="1" x="0.0286" y="1" as="geometry">
+            <mxPoint y="26" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mm0f_G6orl_xgBQ_xF59-25" edge="1" parent="1" source="mm0f_G6orl_xgBQ_xF59-20" style="endArrow=classic;html=1;rounded=0;" target="mm0f_G6orl_xgBQ_xF59-21" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="630" y="340" as="sourcePoint" />
+            <mxPoint x="680" y="290" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mm0f_G6orl_xgBQ_xF59-31" connectable="0" parent="mm0f_G6orl_xgBQ_xF59-25" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Token&amp;nbsp;&lt;div&gt;tensors&lt;/div&gt;" vertex="1">
+          <mxGeometry relative="1" x="-0.1143" y="-3" as="geometry">
+            <mxPoint x="-1" y="22" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mm0f_G6orl_xgBQ_xF59-26" edge="1" parent="1" source="mm0f_G6orl_xgBQ_xF59-21" style="endArrow=classic;html=1;rounded=0;" target="mm0f_G6orl_xgBQ_xF59-22" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="630" y="340" as="sourcePoint" />
+            <mxPoint x="680" y="290" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mm0f_G6orl_xgBQ_xF59-27" edge="1" parent="1" source="mm0f_G6orl_xgBQ_xF59-22" style="endArrow=classic;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;" target="mm0f_G6orl_xgBQ_xF59-18" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <Array as="points">
+              <mxPoint x="1150" y="30" />
+              <mxPoint x="170" y="30" />
+            </Array>
+            <mxPoint x="630" y="290" as="sourcePoint" />
+            <mxPoint x="680" y="240" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mm0f_G6orl_xgBQ_xF59-28" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;autosize=1;resizable=0;" value="Painting a cell or editing inputs sends a new request and updates scores and heatmaps" vertex="1">
+          <mxGeometry height="30" width="490" x="385" y="10" as="geometry" />
+        </mxCell>
+        <mxCell id="mm0f_G6orl_xgBQ_xF59-32" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;autosize=1;resizable=0;" value="JSON,&amp;nbsp;&lt;div&gt;probabilities,&amp;nbsp;&lt;div&gt;maps&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="90" x="990" y="175" as="geometry" />
+        </mxCell>
+        <mxCell id="mm0f_G6orl_xgBQ_xF59-33" edge="1" parent="1" source="mm0f_G6orl_xgBQ_xF59-17" style="endArrow=classic;html=1;rounded=0;" target="mm0f_G6orl_xgBQ_xF59-21" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="730" y="420" as="sourcePoint" />
+            <mxPoint x="780" y="370" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mm0f_G6orl_xgBQ_xF59-34" connectable="0" parent="mm0f_G6orl_xgBQ_xF59-33" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Load at startup" vertex="1">
+          <mxGeometry relative="1" x="0.1067" y="1" as="geometry">
+            <mxPoint x="1" y="31" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mm0f_G6orl_xgBQ_xF59-35" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;autosize=1;resizable=0;" value="Image, text, 196-bit mask" vertex="1">
+          <mxGeometry height="30" width="160" x="90" y="260" as="geometry" />
+        </mxCell>
+        <mxCell id="mm0f_G6orl_xgBQ_xF59-37" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;autosize=1;resizable=0;" value="(1, 197, 768) (1, 64, 768)" vertex="1">
+          <mxGeometry height="30" width="160" x="570" y="260" as="geometry" />
+        </mxCell>
+        <mxCell id="mm0f_G6orl_xgBQ_xF59-41" edge="1" parent="1" source="mm0f_G6orl_xgBQ_xF59-14" style="endArrow=classic;html=1;rounded=0;" target="mm0f_G6orl_xgBQ_xF59-15" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="540" y="410" as="sourcePoint" />
+            <mxPoint x="590" y="360" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mm0f_G6orl_xgBQ_xF59-42" edge="1" parent="1" source="mm0f_G6orl_xgBQ_xF59-15" style="endArrow=classic;html=1;rounded=0;" target="mm0f_G6orl_xgBQ_xF59-16" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="540" y="410" as="sourcePoint" />
+            <mxPoint x="590" y="360" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mm0f_G6orl_xgBQ_xF59-43" edge="1" parent="1" source="mm0f_G6orl_xgBQ_xF59-16" style="endArrow=classic;html=1;rounded=0;" target="mm0f_G6orl_xgBQ_xF59-17" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="540" y="410" as="sourcePoint" />
+            <mxPoint x="590" y="360" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
